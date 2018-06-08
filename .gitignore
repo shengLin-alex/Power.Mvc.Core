@@ -5,3 +5,5 @@
 /src/Power.Mvc.Core/.vs/Power.Mvc.Core
 /src/Power.Mvc.Core/Power.Mvc.Helper/bin/Debug/netcoreapp2.0
 /src/Power.Mvc.Core/Power.Mvc.Helper/obj
+/src/Power.Mvc.Core/Power.Repository.Dapper/bin/Debug/netcoreapp2.0
+/src/Power.Mvc.Core/Power.Repository.Dapper/obj
