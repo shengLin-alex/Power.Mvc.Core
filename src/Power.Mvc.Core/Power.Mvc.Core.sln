@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo", "Repo", "{5FEC4874-8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Power.Repository.Dapper", "Power.Repository.Dapper\Power.Repository.Dapper.csproj", "{460BE5C4-F52D-475B-886E-10903C7A11D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Power.Repository.EFCore", "Power.Repository.EFCore\Power.Repository.EFCore.csproj", "{9CDD362A-7B82-431B-B930-F0EC8D3E6094}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{460BE5C4-F52D-475B-886E-10903C7A11D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{460BE5C4-F52D-475B-886E-10903C7A11D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{460BE5C4-F52D-475B-886E-10903C7A11D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CDD362A-7B82-431B-B930-F0EC8D3E6094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CDD362A-7B82-431B-B930-F0EC8D3E6094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CDD362A-7B82-431B-B930-F0EC8D3E6094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CDD362A-7B82-431B-B930-F0EC8D3E6094}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E55C8F61-AB00-4606-854F-2F216C7A08A5} = {4F1A3236-FEFA-4B21-B1C8-23362FD0522D}
 		{460BE5C4-F52D-475B-886E-10903C7A11D1} = {5FEC4874-8A45-4811-A7F5-407EFD1EAA8A}
+		{9CDD362A-7B82-431B-B930-F0EC8D3E6094} = {5FEC4874-8A45-4811-A7F5-407EFD1EAA8A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4203BB7B-741C-4B8E-A205-CCD292A7DD11}

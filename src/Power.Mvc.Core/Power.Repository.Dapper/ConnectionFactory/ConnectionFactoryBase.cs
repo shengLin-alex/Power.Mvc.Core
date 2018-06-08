@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using Power.Mvc.Helper;
+using Power.Mvc.Helper.Extensions;
 using System.Data;
 
 namespace Power.Repository.Dapper
@@ -9,6 +11,11 @@ namespace Power.Repository.Dapper
     public abstract class ConnectionFactoryBase : IConnectionFactory
     {
         /// <summary>
+        /// 組態設定
+        /// </summary>
+        private readonly IConfiguration Configuration = PackageDiResolver.Current.GetService<IConfiguration>();
+
+        /// <summary>
         /// Db 連線實例
         /// </summary>
         private IDbConnection DbConnectionInstance;
@@ -16,7 +23,7 @@ namespace Power.Repository.Dapper
         /// <summary>
         /// 連線字串
         /// </summary>
-        protected string ConnectionString => ConfigurationManager.ConnectionStrings[this.ConnectionKey].ConnectionString;
+        protected string ConnectionString => this.Configuration.GetConnectionString(this.ConnectionKey);
 
         /// <summary>
         /// 連線字串鍵值

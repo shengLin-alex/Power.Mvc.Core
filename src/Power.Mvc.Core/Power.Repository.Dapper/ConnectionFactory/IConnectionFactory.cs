@@ -2,6 +2,9 @@
 
 namespace Power.Repository.Dapper
 {
+    /// <summary>
+    /// Db 連線工廠介面
+    /// </summary>
     public interface IConnectionFactory
     {
         /// <summary>

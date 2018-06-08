@@ -7,3 +7,5 @@
 /src/Power.Mvc.Core/Power.Mvc.Helper/obj
 /src/Power.Mvc.Core/Power.Repository.Dapper/bin/Debug/netcoreapp2.0
 /src/Power.Mvc.Core/Power.Repository.Dapper/obj
+/src/Power.Mvc.Core/Power.Repository.EFCore/bin/Debug/netcoreapp2.0
+/src/Power.Mvc.Core/Power.Repository.EFCore/obj

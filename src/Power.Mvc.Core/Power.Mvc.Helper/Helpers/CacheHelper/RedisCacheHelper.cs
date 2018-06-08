@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Power.Mvc.Helper.Extensions;
 using StackExchange.Redis;
 using System;
@@ -37,9 +38,9 @@ namespace Power.Mvc.Helper
         }
 
         /// <summary>
-        /// ConfigHelper
+        /// 組態設定
         /// </summary>
-        private static IConfigHelper ConfigHelper => PackageDiResolver.Current.GetService<IConfigHelper>();
+        private static IOptions<RedisConfig> RedisConfig => PackageDiResolver.Current.GetService<IOptions<RedisConfig>>();
 
         /// <summary>
         /// 清除所有快取
@@ -166,7 +167,7 @@ namespace Power.Mvc.Helper
                 {
                     try
                     {
-                        string redisConnectionString = ConfigHelper.Get("Redis:ConnectionString", $"127.0.0.1:6379,password={ConfigHelper.Get("Redis:Password")},syncTimeout=3000");
+                        string redisConnectionString = RedisConfig.Value.RedisConnection;
                         ConfigurationOptions option = ConfigurationOptions.Parse(redisConnectionString);
                         RedisConnectionLazy = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(option));
                     }
@@ -188,7 +189,7 @@ namespace Power.Mvc.Helper
         /// <returns>redis db</returns>
         private IDatabase RedisDb(int database = -1)
         {
-            int configDb = ConfigHelper.Get("Redis:DefaultDatabase", -1);
+            int configDb = RedisConfig.Value.RedisDefaultDb;
             if (database == -1 && configDb > -1)
             {
                 database = configDb;
