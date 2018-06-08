@@ -3,7 +3,6 @@
     /// <summary>
     /// 資料庫查詢字串建立介面
     /// </summary>
-    [TraceAdvice]
     public interface IQueryBuilder
     {
         /// <summary>

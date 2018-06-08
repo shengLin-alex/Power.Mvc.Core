@@ -3,7 +3,6 @@
     /// <summary>
     /// Sql update 敘述介面
     /// </summary>
-    [TraceAdvice]
     public interface ISqlUpdateStatement : ISqlStatement
     {
         /// <summary>

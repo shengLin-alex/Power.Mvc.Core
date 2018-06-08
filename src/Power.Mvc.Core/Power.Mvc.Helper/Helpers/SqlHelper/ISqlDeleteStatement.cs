@@ -3,7 +3,6 @@
     /// <summary>
     /// Sql deleted 敘述介面
     /// </summary>
-    [TraceAdvice]
     public interface ISqlDeleteStatement : ISqlStatement
     {
         /// <summary>
