@@ -43,15 +43,14 @@ namespace Power.Repository.Dapper
         /// <returns>新增成功的實體資料pk</returns>
         public override object Add(TEntity entity)
         {
-            if (entity == null)
+            switch (entity)
             {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            if (entity is IEditColumn editModel)
-            {
-                editModel.CreatedAt = this.ExecutionContext.Now;
-                editModel.CreatedBy = this.UserContext.CurrentUser.UserId;
+                case null:
+                    throw new ArgumentNullException(nameof(entity));
+                case IEditColumn editModel:
+                    editModel.CreatedAt = this.ExecutionContext.Now;
+                    editModel.CreatedBy = this.UserContext.CurrentUser.UserId;
+                    break;
             }
 
             return base.Add(entity);
@@ -65,15 +64,14 @@ namespace Power.Repository.Dapper
         /// <returns>更新成功受影響的欄位數</returns>
         public override int Update(TEntity entity)
         {
-            if (entity == null)
+            switch (entity)
             {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            if (entity is IEditColumn editModel)
-            {
-                editModel.UpdatedAt = this.ExecutionContext.Now;
-                editModel.UpdatedBy = this.UserContext.CurrentUser.UserId;
+                case null:
+                    throw new ArgumentNullException(nameof(entity));
+                case IEditColumn editModel:
+                    editModel.UpdatedAt = this.ExecutionContext.Now;
+                    editModel.UpdatedBy = this.UserContext.CurrentUser.UserId;
+                    break;
             }
 
             return base.Update(entity);
