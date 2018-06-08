@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Power.Mvc.Helper\Power.Mvc.Helper.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repository\" />
-  </ItemGroup>
-
 </Project>
