@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Power.Mvc.Helper.Extensions;
 using StackExchange.Redis;
 using System;
@@ -32,15 +31,19 @@ namespace Power.Mvc.Helper
         /// 建構子
         /// </summary>
         /// <param name="logger">Logger</param>
-        public RedisCacheHelper(ILogger<RedisCacheHelper> logger)
+        /// <param name="settingHelper">appsetting 設定</param>
+        public RedisCacheHelper(
+            ILogger<RedisCacheHelper> logger,
+            ISettingHelper settingHelper)
         {
             this.Logger = logger;
+            RedisConfig = settingHelper.GetSection<RedisConfig>("RedisConfig");
         }
 
         /// <summary>
         /// 組態設定
         /// </summary>
-        private static IOptions<RedisConfig> RedisConfig => PackageDiResolver.Current.GetService<IOptions<RedisConfig>>();
+        public static RedisConfig RedisConfig { get; private set; }
 
         /// <summary>
         /// 清除所有快取
@@ -161,20 +164,27 @@ namespace Power.Mvc.Helper
         /// <returns>Redis 連線個體</returns>
         private static ConnectionMultiplexer GetConnection()
         {
-            if (RedisConnectionLazy == null || !RedisConnectionLazy.IsValueCreated || !RedisConnectionLazy.Value.IsConnected)
+            if (RedisConfig == null)
             {
-                lock (SyncRoot)
+                throw new AggregateException($"{ nameof(RedisConfig) } is null!");
+            }
+
+            if (RedisConnectionLazy != null && RedisConnectionLazy.IsValueCreated && RedisConnectionLazy.Value.IsConnected)
+            {
+                return RedisConnectionLazy.Value;
+            }
+
+            lock (SyncRoot)
+            {
+                try
                 {
-                    try
-                    {
-                        string redisConnectionString = RedisConfig.Value.RedisConnection;
-                        ConfigurationOptions option = ConfigurationOptions.Parse(redisConnectionString);
-                        RedisConnectionLazy = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(option));
-                    }
-                    catch (Exception exception)
-                    {
-                        throw new AggregateException($"Exception: {exception} Message: {exception.Message}; Redis 連線錯誤");
-                    }
+                    string redisConnectionString = RedisConfig.RedisConnection;
+                    ConfigurationOptions option = ConfigurationOptions.Parse(redisConnectionString);
+                    RedisConnectionLazy = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(option));
+                }
+                catch (Exception exception)
+                {
+                    throw new AggregateException($"Exception: {exception} Message: {exception.Message}; Redis 連線錯誤");
                 }
             }
 
@@ -189,7 +199,12 @@ namespace Power.Mvc.Helper
         /// <returns>redis db</returns>
         private IDatabase RedisDb(int database = -1)
         {
-            int configDb = RedisConfig.Value.RedisDefaultDb;
+            if (RedisConfig == null)
+            {
+                throw new AggregateException($"{ nameof(RedisConfig) } is null!");
+            }
+
+            int configDb = RedisConfig.RedisDefaultDb;
             if (database == -1 && configDb > -1)
             {
                 database = configDb;
