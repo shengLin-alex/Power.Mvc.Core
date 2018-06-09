@@ -29,7 +29,7 @@ namespace Power.Repository.Dapper
         /// Constructor
         /// </summary>
         /// <param name="factory">連線工廠</param>
-        protected RepositoryGeneric(IConnectionFactory factory)
+        public RepositoryGeneric(IConnectionFactory factory)
         {
             this.Factory = factory;
         }

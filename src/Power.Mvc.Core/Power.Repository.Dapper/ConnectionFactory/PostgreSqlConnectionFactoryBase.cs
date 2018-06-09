@@ -23,7 +23,7 @@ namespace Power.Repository.Dapper
         /// </summary>
         protected override void SetDialect()
         {
-            SimpleCRUD.SetDialect(SimpleCRUD.Dialect.MySQL);
+            SimpleCRUD.SetDialect(SimpleCRUD.Dialect.PostgreSQL);
         }
     }
 }
