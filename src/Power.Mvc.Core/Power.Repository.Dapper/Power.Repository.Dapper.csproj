@@ -7,7 +7,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netcoreapp2.0\Power.Repository.Dapper.xml</DocumentationFile>
     <PackageId>PowerRepo.Dapper</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>Sheng-Wei Lin</Authors>
   </PropertyGroup>
 
