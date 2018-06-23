@@ -38,6 +38,6 @@ namespace Power.Repository.EFCore
         ///     A builder used to create or modify options for this context. Databases (and other extensions)
         ///     typically define extension methods on this object that allow you to configure the context.
         /// </param>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseMySQL(this.ConnectionString);
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseMySql(this.ConnectionString);
     }
 }
