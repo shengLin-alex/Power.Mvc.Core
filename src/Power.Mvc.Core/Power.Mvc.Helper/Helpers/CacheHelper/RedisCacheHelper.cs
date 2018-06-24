@@ -3,6 +3,7 @@ using Power.Mvc.Helper.Extensions;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace Power.Mvc.Helper
@@ -114,19 +115,11 @@ namespace Power.Mvc.Helper
         /// </param>
         public void RemoveByPattern(string pattern)
         {
-            List<string> keysToRemove = new List<string>();
             EndPoint[] endpoints = GetConnection().GetEndPoints(true);
 
-            foreach (EndPoint endpoint in endpoints)
-            {
-                IServer server = GetConnection().GetServer(endpoint);
-
-                // 取得設定的 Database 中的 Keys
-                foreach (RedisKey item in server.Keys(this.RedisDb().Database, pattern))
-                {
-                    keysToRemove.Add(item);
-                }
-            }
+            List<string> keysToRemove = endpoints.Select(endpoint => GetConnection().GetServer(endpoint))
+                                                 .SelectMany(server => server.Keys(this.RedisDb().Database, pattern))
+                                                 .Select(item => (string)item).ToList();
 
             foreach (string key in keysToRemove)
             {
