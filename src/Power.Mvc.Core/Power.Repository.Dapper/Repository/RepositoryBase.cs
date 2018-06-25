@@ -13,7 +13,7 @@ namespace Power.Repository.Dapper
         /// <summary>
         /// 使用者資訊上下文
         /// </summary>
-        private readonly IUserContext UserContext;
+        private readonly IUserContext<IUserInfo> UserContext;
 
         /// <summary>
         /// ExecutionContext
@@ -27,7 +27,7 @@ namespace Power.Repository.Dapper
         /// <param name="executionContext">ExecutionContext</param>
         /// <param name="factory">DbContext 工廠</param>
         public RepositoryBase(
-            IUserContext userContext,
+            IUserContext<IUserInfo> userContext,
             IExecutionContext executionContext,
             IConnectionFactory factory) : base(factory)
         {
@@ -49,7 +49,7 @@ namespace Power.Repository.Dapper
                     throw new ArgumentNullException(nameof(entity));
                 case IEditColumn editModel:
                     editModel.CreatedAt = this.ExecutionContext.Now;
-                    editModel.CreatedBy = this.UserContext.CurrentUser.UserId;
+                    editModel.CreatedBy = this.UserContext.Current.UserId;
                     break;
             }
 
@@ -70,7 +70,7 @@ namespace Power.Repository.Dapper
                     throw new ArgumentNullException(nameof(entity));
                 case IEditColumn editModel:
                     editModel.UpdatedAt = this.ExecutionContext.Now;
-                    editModel.UpdatedBy = this.UserContext.CurrentUser.UserId;
+                    editModel.UpdatedBy = this.UserContext.Current.UserId;
                     break;
             }
 

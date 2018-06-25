@@ -3,11 +3,11 @@
     /// <summary>
     /// 使用者資訊
     /// </summary>
-    public class UserInfo
+    public interface IUserInfo
     {
         /// <summary>
-        /// 帳號
+        /// 辨識使用者之編號
         /// </summary>
-        public string UserId { get; set; }
+        string UserId { get; set; }
     }
 }

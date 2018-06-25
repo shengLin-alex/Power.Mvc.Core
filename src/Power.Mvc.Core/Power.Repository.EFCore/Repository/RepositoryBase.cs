@@ -18,7 +18,7 @@ namespace Power.Repository.EFCore
         /// <summary>
         /// 使用者資訊上下文
         /// </summary>
-        private readonly IUserContext UserContext;
+        private readonly IUserContext<IUserInfo> UserContext;
 
         /// <summary>
         /// ExecutionContext
@@ -32,7 +32,7 @@ namespace Power.Repository.EFCore
         /// <param name="executionContext">ExecutionContext</param>
         /// <param name="factory">DbContext 工廠</param>
         public RepositoryBase(
-            IUserContext userContext,
+            IUserContext<IUserInfo> userContext,
             IExecutionContext executionContext,
             IDbContextFactory<TDbContext> factory) : base(factory)
         {
@@ -54,7 +54,7 @@ namespace Power.Repository.EFCore
                     throw new ArgumentNullException(nameof(entity));
                 case IEditColumn editModel:
                     editModel.CreatedAt = this.ExecutionContext.Now;
-                    editModel.CreatedBy = this.UserContext.CurrentUser.UserId;
+                    editModel.CreatedBy = this.UserContext.Current.UserId;
                     break;
             }
 
@@ -75,7 +75,7 @@ namespace Power.Repository.EFCore
                     throw new ArgumentNullException(nameof(entity));
                 case IEditColumn editModel:
                     editModel.CreatedAt = this.ExecutionContext.Now;
-                    editModel.CreatedBy = this.UserContext.CurrentUser.UserId;
+                    editModel.CreatedBy = this.UserContext.Current.UserId;
                     break;
             }
 
@@ -95,7 +95,7 @@ namespace Power.Repository.EFCore
                     throw new ArgumentNullException(nameof(entity));
                 case IEditColumn editModel:
                     editModel.UpdatedAt = this.ExecutionContext.Now;
-                    editModel.UpdatedBy = this.UserContext.CurrentUser.UserId;
+                    editModel.UpdatedBy = this.UserContext.Current.UserId;
                     break;
             }
 
@@ -116,7 +116,7 @@ namespace Power.Repository.EFCore
                     throw new ArgumentNullException(nameof(entity));
                 case IEditColumn editModel:
                     editModel.UpdatedAt = this.ExecutionContext.Now;
-                    editModel.UpdatedBy = this.UserContext.CurrentUser.UserId;
+                    editModel.UpdatedBy = this.UserContext.Current.UserId;
                     break;
             }
 
