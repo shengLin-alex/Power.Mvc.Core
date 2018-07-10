@@ -296,19 +296,21 @@ namespace Power.Repository.EFCore
         protected virtual void Dispose(bool disposing)
         {
             // Check to see if Dispose has already been called.
-            if (!this.Disposed)
+            if (this.Disposed)
             {
-                // If disposing equals true, dispose all managed and unmanaged resources.
-                if (disposing)
-                {
-                    // Dispose managed resources.
-                    this.DbContextInstance.Dispose();
-                    this.DbContextInstance = null;
-                }
-
-                // Note disposing has been done.
-                this.Disposed = true;
+                return;
             }
+
+            // If disposing equals true, dispose all managed and unmanaged resources.
+            if (disposing)
+            {
+                // Dispose managed resources.
+                this.DbContextInstance.Dispose();
+                this.DbContextInstance = null;
+            }
+
+            // Note disposing has been done.
+            this.Disposed = true;
         }
     }
 }
