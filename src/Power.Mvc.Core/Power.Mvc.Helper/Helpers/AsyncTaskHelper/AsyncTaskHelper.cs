@@ -109,7 +109,7 @@ namespace Power.Mvc.Helper
             /// <summary>
             /// The exception threw by work item's callback method
             /// </summary>
-            public System.Exception InnerException { private get; set; }
+            public Exception InnerException { private get; set; }
 
             /// <summary>
             /// 在衍生類別中覆寫時，會將同步訊息分派至同步處理內容。

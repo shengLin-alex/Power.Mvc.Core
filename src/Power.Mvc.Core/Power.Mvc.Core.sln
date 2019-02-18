@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Power.Repository.Dapper", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Power.Repository.EFCore", "Power.Repository.EFCore\Power.Repository.EFCore.csproj", "{9CDD362A-7B82-431B-B930-F0EC8D3E6094}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper.SimpleCRUD.Fork.NetStandard", "..\..\..\Dapper.SimpleCRUD.Fork.NetStandard\Dapper.SimpleCRUD.Fork.NetStandard\Dapper.SimpleCRUD.Fork.NetStandard.csproj", "{3A425D38-98D4-41AC-A138-63DE478B46C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{9CDD362A-7B82-431B-B930-F0EC8D3E6094}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CDD362A-7B82-431B-B930-F0EC8D3E6094}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CDD362A-7B82-431B-B930-F0EC8D3E6094}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A425D38-98D4-41AC-A138-63DE478B46C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A425D38-98D4-41AC-A138-63DE478B46C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A425D38-98D4-41AC-A138-63DE478B46C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A425D38-98D4-41AC-A138-63DE478B46C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
