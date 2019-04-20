@@ -1,9 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Power.Mvc.Helper;
+using Power.Mvc.Helper.Extensions;
 
 namespace Power.Repository.EFCore
 {
     /// <summary>
-    /// PostgreSql DbContext 基底
+    /// PostgreSQL DbContext 基底
     /// </summary>
     public class PostgreSqlDbContextBase : DbContext
     {
@@ -11,6 +14,11 @@ namespace Power.Repository.EFCore
         /// 連線字串
         /// </summary>
         private readonly string ConnectionString;
+        
+        /// <summary>
+        /// LoggerFactory
+        /// </summary>
+        private ILoggerFactory LoggerFactory => PackageDiResolver.Current.GetService<ILoggerFactory>();
 
         /// <summary>
         /// 建構子
@@ -38,6 +46,10 @@ namespace Power.Repository.EFCore
         ///     A builder used to create or modify options for this context. Databases (and other extensions)
         ///     typically define extension methods on this object that allow you to configure the context.
         /// </param>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql(this.ConnectionString);
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql(this.ConnectionString);
+            optionsBuilder.UseLoggerFactory(this.LoggerFactory);
+        }
     }
 }

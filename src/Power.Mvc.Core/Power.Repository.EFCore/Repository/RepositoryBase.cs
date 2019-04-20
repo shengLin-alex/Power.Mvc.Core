@@ -87,7 +87,7 @@ namespace Power.Repository.EFCore
         /// </summary>
         /// <param name="entity">欲更新的實體資料</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public override void Update(TEntity entity)
+        public override bool Update(TEntity entity)
         {
             switch (entity)
             {
@@ -99,7 +99,7 @@ namespace Power.Repository.EFCore
                     break;
             }
 
-            base.Update(entity);
+            return base.Update(entity);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Power.Repository.EFCore
         /// <param name="entity">欲更新的實體資料</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns>非同步工作</returns>
-        public override async Task UpdateAsync(TEntity entity)
+        public override async Task<bool> UpdateAsync(TEntity entity)
         {
             switch (entity)
             {
@@ -120,7 +120,7 @@ namespace Power.Repository.EFCore
                     break;
             }
 
-            await base.UpdateAsync(entity);
+            return await base.UpdateAsync(entity);
         }
     }
 }

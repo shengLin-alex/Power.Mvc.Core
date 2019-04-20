@@ -39,27 +39,29 @@ namespace Power.Repository.EFCore
         /// 更新
         /// </summary>
         /// <param name="entity">資料實體</param>
-        void Update(TEntity entity);
+        /// <returns>更新是否成功</returns>
+        bool Update(TEntity entity);
 
         /// <summary>
         /// 更新(非同步方法)
         /// </summary>
         /// <param name="entity">資料實體</param>
         /// <returns>非同步作業</returns>
-        Task UpdateAsync(TEntity entity);
+        Task<bool> UpdateAsync(TEntity entity);
 
         /// <summary>
         /// 刪除
         /// </summary>
         /// <param name="entity">資料實體</param>
-        void Delete(TEntity entity);
+        /// <returns>刪除是否成功</returns>
+        bool Delete(TEntity entity);
 
         /// <summary>
         /// 刪除(非同步方法)
         /// </summary>
         /// <param name="entity">資料實體</param>
         /// <returns>非同步作業</returns>
-        Task DeleteAsync(TEntity entity);
+        Task<bool> DeleteAsync(TEntity entity);
 
         /// <summary>
         /// 取得單一筆資料

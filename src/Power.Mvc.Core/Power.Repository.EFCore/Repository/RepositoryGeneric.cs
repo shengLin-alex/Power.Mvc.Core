@@ -31,8 +31,7 @@ namespace Power.Repository.EFCore
         /// Constructor
         /// </summary>
         /// <param name="factory">DbContext 工廠</param>
-        public RepositoryGeneric(
-            IDbContextFactory<TDbContext> factory)
+        public RepositoryGeneric(IDbContextFactory<TDbContext> factory)
         {
             this.DbContextInstance = factory.DbContext;
         }
@@ -97,7 +96,8 @@ namespace Power.Repository.EFCore
         /// </summary>
         /// <param name="entity">資料實體</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual void Update(TEntity entity)
+        /// <returns>更新是否成功</returns>
+        public virtual bool Update(TEntity entity)
         {
             if (entity == null)
             {
@@ -105,7 +105,8 @@ namespace Power.Repository.EFCore
             }
 
             this.DbContextInstance.Entry(entity).State = EntityState.Modified;
-            this.DbContextInstance.SaveChanges();
+
+            return this.DbContextInstance.SaveChanges() > 0;
         }
 
         /// <summary>
@@ -114,7 +115,7 @@ namespace Power.Repository.EFCore
         /// <param name="entity">資料實體</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns>非同步作業</returns>
-        public virtual async Task UpdateAsync(TEntity entity)
+        public virtual async Task<bool> UpdateAsync(TEntity entity)
         {
             if (entity == null)
             {
@@ -122,7 +123,8 @@ namespace Power.Repository.EFCore
             }
 
             this.DbContextInstance.Entry(entity).State = EntityState.Modified;
-            await this.DbContextInstance.SaveChangesAsync();
+            
+            return await this.DbContextInstance.SaveChangesAsync() > 0;
         }
 
         /// <summary>
@@ -130,7 +132,8 @@ namespace Power.Repository.EFCore
         /// </summary>
         /// <param name="entity">資料實體</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual void Delete(TEntity entity)
+        /// <returns>刪除是否成功</returns>
+        public virtual bool Delete(TEntity entity)
         {
             if (entity == null)
             {
@@ -138,7 +141,8 @@ namespace Power.Repository.EFCore
             }
 
             this.DbContextInstance.Entry(entity).State = EntityState.Deleted;
-            this.DbContextInstance.SaveChanges();
+            
+            return this.DbContextInstance.SaveChanges() > 0;
         }
 
         /// <summary>
@@ -147,7 +151,7 @@ namespace Power.Repository.EFCore
         /// <param name="entity">資料實體</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns>非同步作業</returns>
-        public virtual async Task DeleteAsync(TEntity entity)
+        public virtual async Task<bool> DeleteAsync(TEntity entity)
         {
             if (entity == null)
             {
@@ -155,7 +159,8 @@ namespace Power.Repository.EFCore
             }
 
             this.DbContextInstance.Entry(entity).State = EntityState.Deleted;
-            await this.DbContextInstance.SaveChangesAsync();
+            
+            return await this.DbContextInstance.SaveChangesAsync() > 0;
         }
 
         /// <summary>
