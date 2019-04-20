@@ -9,7 +9,7 @@ namespace Power.Mvc.Helper
     /// <summary>
     /// 資料模型驗證
     /// <para>子類可繼承<see cref="ModelValidatorBase{TModel}"/>，並且定義附加<see cref="ValidatorRuleAttribute"/>之公開或保護存取的<see cref="Void"/>方法。</para>
-    /// <para>必須於方法中定義單一參數，型別為<see cref="TModel"/></para>
+    /// <para>必須於方法中定義單一參數，型別為TModel</para>
     /// </summary>
     /// <typeparam name="TModel">資料模型類別</typeparam>
     public class ModelValidatorBase<TModel> : IModelValidator<TModel> where TModel : class
