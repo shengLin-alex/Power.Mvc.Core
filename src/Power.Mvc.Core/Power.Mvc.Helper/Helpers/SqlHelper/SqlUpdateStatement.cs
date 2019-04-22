@@ -8,7 +8,6 @@ namespace Power.Mvc.Helper
     /// <summary>
     /// Sql update 敘述介面
     /// </summary>
-    [TraceAdvice]
     public class SqlUpdateStatement : ISqlUpdateStatement
     {
         /// <summary>

@@ -7,9 +7,11 @@ using System.Reflection;
 namespace Power.Mvc.Helper
 {
     /// <summary>
-    /// Model 驗證器基底類別，所有延伸驗證器皆繼承此類
+    /// 資料模型驗證
+    /// <para>子類可繼承<see cref="ModelValidatorBase{TModel}"/>，並且定義附加<see cref="ValidatorRuleAttribute"/>之公開或保護存取的<see cref="Void"/>方法。</para>
+    /// <para>必須於方法中定義單一參數，型別為TModel</para>
     /// </summary>
-    /// <typeparam name="TModel">欲驗證的模型型別</typeparam>
+    /// <typeparam name="TModel">資料模型類別</typeparam>
     public class ModelValidatorBase<TModel> : IModelValidator<TModel> where TModel : class
     {
         /// <summary>
@@ -86,17 +88,11 @@ namespace Power.Mvc.Helper
                                                  {
                                                      ValidatorRuleAttribute attribute = m.GetCustomAttribute<ValidatorRuleAttribute>();
 
-                                                     if (attribute == null)
-                                                     {
-                                                         return false;
-                                                     }
-
-                                                     if (attribute.ValidatorPriority.Equals(ValidatorPriority.Necessary) && m.ReturnType == typeof(void))
-                                                     {
-                                                         return true;
-                                                     }
-
-                                                     return false;
+                                                     return attribute != null &&
+                                                            attribute.ValidatorPriority.Equals(ValidatorPriority.Necessary) &&
+                                                            m.ReturnType == typeof(void) &&
+                                                            m.GetParameters().Count() == 1 &&
+                                                            m.GetParameters().First().ParameterType == typeof(TModel);
                                                  })
                                                 .OrderBy(m => m.GetCustomAttribute<ValidatorRuleAttribute>()?.Seq);
 
@@ -116,17 +112,11 @@ namespace Power.Mvc.Helper
                                                  {
                                                      ValidatorRuleAttribute attribute = m.GetCustomAttribute<ValidatorRuleAttribute>();
 
-                                                     if (attribute == null)
-                                                     {
-                                                         return false;
-                                                     }
-
-                                                     if (attribute.ValidatorPriority.Equals(ValidatorPriority.Skippable) && m.ReturnType == typeof(void))
-                                                     {
-                                                         return true;
-                                                     }
-
-                                                     return false;
+                                                     return attribute != null &&
+                                                            attribute.ValidatorPriority.Equals(ValidatorPriority.Skippable) &&
+                                                            m.ReturnType == typeof(void) &&
+                                                            m.GetParameters().Count() == 1 &&
+                                                            m.GetParameters().First().ParameterType == typeof(TModel);
                                                  })
                                                 .OrderBy(m => m.GetCustomAttribute<ValidatorRuleAttribute>()?.Seq);
 

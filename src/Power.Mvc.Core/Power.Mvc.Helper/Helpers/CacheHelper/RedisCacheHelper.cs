@@ -3,6 +3,7 @@ using Power.Mvc.Helper.Extensions;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace Power.Mvc.Helper
@@ -31,15 +32,19 @@ namespace Power.Mvc.Helper
         /// 建構子
         /// </summary>
         /// <param name="logger">Logger</param>
-        public RedisCacheHelper(ILogger<RedisCacheHelper> logger)
+        /// <param name="settingHelper">appsetting 設定</param>
+        public RedisCacheHelper(
+            ILogger<RedisCacheHelper> logger,
+            ISettingHelper settingHelper)
         {
             this.Logger = logger;
+            RedisConfig = settingHelper.GetSection<RedisConfig>("RedisConfig");
         }
 
         /// <summary>
-        /// ConfigHelper
+        /// 組態設定
         /// </summary>
-        private static IConfigHelper ConfigHelper => PackageDiResolver.Current.GetService<IConfigHelper>();
+        public static RedisConfig RedisConfig { get; private set; }
 
         /// <summary>
         /// 清除所有快取
@@ -110,19 +115,11 @@ namespace Power.Mvc.Helper
         /// </param>
         public void RemoveByPattern(string pattern)
         {
-            List<string> keysToRemove = new List<string>();
             EndPoint[] endpoints = GetConnection().GetEndPoints(true);
 
-            foreach (EndPoint endpoint in endpoints)
-            {
-                IServer server = GetConnection().GetServer(endpoint);
-
-                // 取得設定的 Database 中的 Keys
-                foreach (RedisKey item in server.Keys(this.RedisDb().Database, pattern))
-                {
-                    keysToRemove.Add(item);
-                }
-            }
+            List<string> keysToRemove = endpoints.Select(endpoint => GetConnection().GetServer(endpoint))
+                                                 .SelectMany(server => server.Keys(this.RedisDb().Database, pattern))
+                                                 .Select(item => (string)item).ToList();
 
             foreach (string key in keysToRemove)
             {
@@ -160,20 +157,27 @@ namespace Power.Mvc.Helper
         /// <returns>Redis 連線個體</returns>
         private static ConnectionMultiplexer GetConnection()
         {
-            if (RedisConnectionLazy == null || !RedisConnectionLazy.IsValueCreated || !RedisConnectionLazy.Value.IsConnected)
+            if (RedisConfig == null)
             {
-                lock (SyncRoot)
+                throw new AggregateException($"{ nameof(RedisConfig) } is null!");
+            }
+
+            if (RedisConnectionLazy != null && RedisConnectionLazy.IsValueCreated && RedisConnectionLazy.Value.IsConnected)
+            {
+                return RedisConnectionLazy.Value;
+            }
+
+            lock (SyncRoot)
+            {
+                try
                 {
-                    try
-                    {
-                        string redisConnectionString = ConfigHelper.Get("Redis:ConnectionString", $"127.0.0.1:6379,password={ConfigHelper.Get("Redis:Password")},syncTimeout=3000");
-                        ConfigurationOptions option = ConfigurationOptions.Parse(redisConnectionString);
-                        RedisConnectionLazy = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(option));
-                    }
-                    catch (Exception exception)
-                    {
-                        throw new AggregateException($"Exception: {exception} Message: {exception.Message}; Redis 連線錯誤");
-                    }
+                    string redisConnectionString = RedisConfig.RedisConnection;
+                    ConfigurationOptions option = ConfigurationOptions.Parse(redisConnectionString);
+                    RedisConnectionLazy = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(option));
+                }
+                catch (Exception exception)
+                {
+                    throw new AggregateException($"Exception: {exception} Message: {exception.Message}; Redis 連線錯誤");
                 }
             }
 
@@ -188,7 +192,12 @@ namespace Power.Mvc.Helper
         /// <returns>redis db</returns>
         private IDatabase RedisDb(int database = -1)
         {
-            int configDb = ConfigHelper.Get("Redis:DefaultDatabase", -1);
+            if (RedisConfig == null)
+            {
+                throw new AggregateException($"{ nameof(RedisConfig) } is null!");
+            }
+
+            int configDb = RedisConfig.RedisDefaultDb;
             if (database == -1 && configDb > -1)
             {
                 database = configDb;

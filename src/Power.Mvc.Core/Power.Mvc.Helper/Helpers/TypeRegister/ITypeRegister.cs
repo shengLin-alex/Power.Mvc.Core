@@ -3,7 +3,7 @@
 namespace Power.Mvc.Helper
 {
     /// <summary>
-    /// MVC 5 物件註冊介面
+    /// AspNet.Core 物件註冊介面
     /// </summary>
     public interface ITypeRegister
     {

@@ -5,23 +5,26 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netcoreapp2.2\Power.Mvc.Helper.xml</DocumentationFile>
-    <PackageId>PowerHelper.Core</PackageId>
-    <Version>2.2.1</Version>
+    <DocumentationFile>bin\Debug\netcoreapp2.2\Power.Repository.Dapper.xml</DocumentationFile>
+    <PackageId>PowerRepo.Dapper</PackageId>
+    <Version>2.2.0</Version>
     <Authors>Sheng-Wei Lin</Authors>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.2" />
-    <PackageReference Include="Autofac.Configuration" Version="4.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
-    <PackageReference Include="AutoMapper" Version="8.0.0" />
-    <PackageReference Include="EPPlus" Version="4.5.3.1" />
+    <PackageReference Include="Dapper" Version="1.60.6" />
+    <PackageReference Include="Dapper.SimpleCRUD" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2-beta1" />
-    <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="MiniProfiler.Shared" Version="4.0.165" />
+    <PackageReference Include="MySql.Data" Version="6.10.7" />
+    <PackageReference Include="Npgsql" Version="4.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Power.Mvc.Helper\Power.Mvc.Helper.csproj" />
   </ItemGroup>
 
 </Project>

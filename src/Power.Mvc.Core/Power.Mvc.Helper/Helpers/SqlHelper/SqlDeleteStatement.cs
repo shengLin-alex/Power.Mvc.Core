@@ -8,7 +8,6 @@ namespace Power.Mvc.Helper
     /// <summary>
     /// Sql deleted 敘述介面
     /// </summary>
-    [TraceAdvice]
     public class SqlDeleteStatement : ISqlDeleteStatement
     {
         /// <summary>

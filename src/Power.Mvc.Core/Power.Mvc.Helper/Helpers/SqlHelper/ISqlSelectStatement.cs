@@ -3,7 +3,6 @@
     /// <summary>
     /// Select 敘述介面
     /// </summary>
-    [TraceAdvice]
     public interface ISqlSelectStatement : ISqlStatement
     {
         /// <summary>
