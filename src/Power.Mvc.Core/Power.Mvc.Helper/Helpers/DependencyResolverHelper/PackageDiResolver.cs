@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using System;
 using System.Collections.Generic;
+using Power.Mvc.Helper.Exceptions;
 
 namespace Power.Mvc.Helper
 {
@@ -39,12 +40,14 @@ namespace Power.Mvc.Helper
         {
             get
             {
-                if (DiResolverInstance == null || !DiResolverInstance.IsValueCreated)
+                if (DiResolverInstance != null && DiResolverInstance.IsValueCreated)
                 {
-                    lock (SyncRoot)
-                    {
-                        DiResolverInstance = new Lazy<PackageDiResolver>(() => new PackageDiResolver());
-                    }
+                    return DiResolverInstance.Value;
+                }
+
+                lock (SyncRoot)
+                {
+                    DiResolverInstance = new Lazy<PackageDiResolver>(() => new PackageDiResolver());
                 }
 
                 return DiResolverInstance.Value;
@@ -57,7 +60,7 @@ namespace Power.Mvc.Helper
         /// <param name="container">IContainer</param>
         public void SetAutofacContainer(IContainer container)
         {
-            this.ContainerInstance = container;
+            this.ContainerInstance = container ?? throw new NullContainerException("Null Container!");
         }
 
         /// <summary>
@@ -67,6 +70,11 @@ namespace Power.Mvc.Helper
         /// <param name="serviceType">要求之服務或物件的型別。</param>
         public object GetService(Type serviceType)
         {
+            if (this.ContainerInstance == null)
+            {
+                throw new NullContainerException("Null Container!");
+            }
+
             return this.ContainerInstance.ResolveOptional(serviceType);
         }
 
@@ -78,6 +86,11 @@ namespace Power.Mvc.Helper
         /// <returns>要求的服務或物件。</returns>
         public object GetService(Type serviceType, object key)
         {
+            if (this.ContainerInstance == null)
+            {
+                throw new NullContainerException("Null Container!");
+            }
+
             return this.ContainerInstance.ResolveKeyed(key, serviceType);
         }
 
@@ -88,6 +101,11 @@ namespace Power.Mvc.Helper
         /// <param name="serviceType">要求之服務的型別。</param>
         public IEnumerable<object> GetServices(Type serviceType)
         {
+            if (this.ContainerInstance == null)
+            {
+                throw new NullContainerException("Null Container!");
+            }
+
             return (IEnumerable<object>)this.ContainerInstance.Resolve(typeof(IEnumerable<>).MakeGenericType(serviceType));
         }
     }

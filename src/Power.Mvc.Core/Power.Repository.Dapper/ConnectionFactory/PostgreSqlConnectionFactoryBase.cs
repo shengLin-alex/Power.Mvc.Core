@@ -1,5 +1,7 @@
 ﻿using Dapper;
 using Npgsql;
+using StackExchange.Profiling;
+using StackExchange.Profiling.Data;
 using System.Data;
 
 namespace Power.Repository.Dapper
@@ -15,7 +17,7 @@ namespace Power.Repository.Dapper
         /// <returns> Db 連線 </returns>
         protected override IDbConnection CreateConnection()
         {
-            return new NpgsqlConnection(this.ConnectionString);
+            return new ProfiledDbConnection(new NpgsqlConnection(this.ConnectionString), MiniProfiler.Current);
         }
 
         /// <summary>

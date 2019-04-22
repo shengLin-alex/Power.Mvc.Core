@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netcoreapp2.0\Power.Repository.Dapper.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netcoreapp2.2\Power.Repository.Dapper.xml</DocumentationFile>
     <PackageId>PowerRepo.Dapper</PackageId>
-    <Version>1.0.6</Version>
+    <Version>2.2.0</Version>
     <Authors>Sheng-Wei Lin</Authors>
   </PropertyGroup>
 
@@ -18,6 +18,7 @@
     <PackageReference Include="Dapper.SimpleCRUD" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+    <PackageReference Include="MiniProfiler.Shared" Version="4.0.165" />
     <PackageReference Include="MySql.Data" Version="6.10.7" />
     <PackageReference Include="Npgsql" Version="4.0.6" />
   </ItemGroup>
