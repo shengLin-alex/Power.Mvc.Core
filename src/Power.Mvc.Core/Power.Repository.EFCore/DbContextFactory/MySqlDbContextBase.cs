@@ -48,7 +48,7 @@ namespace Power.Repository.EFCore
         /// </param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql(this.ConnectionString);
+            optionsBuilder.UseMySql(this.ConnectionString, ServerVersion.AutoDetect(this.ConnectionString));
             optionsBuilder.UseLoggerFactory(this.LoggerFactory);
         }
     }
