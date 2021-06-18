@@ -13,7 +13,7 @@ namespace Power.Mvc.Helper
         /// 設定注入容器
         /// </summary>
         /// <param name="container">IContainer</param>
-        void SetAutofacContainer(IContainer container);
+        void SetAutofacContainer(ILifetimeScope container);
 
         /// <summary>
         /// 解析支援任意物件建立的單一註冊服務。

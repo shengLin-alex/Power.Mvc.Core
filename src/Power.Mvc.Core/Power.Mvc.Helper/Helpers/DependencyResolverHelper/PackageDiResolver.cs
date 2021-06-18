@@ -23,7 +23,7 @@ namespace Power.Mvc.Helper
         /// <summary>
         /// 相依性注入容器
         /// </summary>
-        private IContainer ContainerInstance;
+        private ILifetimeScope ContainerInstance;
 
         /// <summary>
         /// 使用私有建構子
@@ -58,7 +58,7 @@ namespace Power.Mvc.Helper
         /// 設定注入容器
         /// </summary>
         /// <param name="container">IContainer</param>
-        public void SetAutofacContainer(IContainer container)
+        public void SetAutofacContainer(ILifetimeScope container)
         {
             this.ContainerInstance = container ?? throw new NullContainerException("Null Container!");
         }
